@@ -347,7 +347,6 @@ function login() {
             topRatio: 0.3,
             scrolling: "no",
         };
-
         $("#forget-password-link").fancybox(fancyboxConfig);
         $("#resend-activation-email-link").fancybox(fancyboxConfig)
         $("#login-button").click(login);

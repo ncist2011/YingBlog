@@ -12,6 +12,8 @@ class LoginHandler(tornado.web.RequestHandler):
     def get(self):
         if not self.current_user:
             self.render("login.html")
+        else:
+            self.redirect("/home")
 
     def post(self):
         username = self.get_argument(username, "")
@@ -20,12 +22,11 @@ class LoginHandler(tornado.web.RequestHandler):
         meta = {'username': username,
                 'passwd': passwd}
 
-        coll = 'user'
-        user = yield Connection.get_document(coll, meta)
+        collection = 'user'
+        user = yield Connection.get_document(dc, meta)
 
         if not user:
-            print(1111111111111111111111111111)
-
+            self.write("error username or passwd")
 
 class LogoutHandler(tornado.web.RequestHandler):
     def post(self):

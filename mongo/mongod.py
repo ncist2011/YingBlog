@@ -8,8 +8,8 @@ db = pymongo.MongoClient("127.0.0.1", 27017)
 class Connection():
     @classmethod
     def get_connection(self):
-        db = pymongo.Connection(localhost, 27017)
-        return db
+        connection = pymongo.Connection(localhost, 27017)
+        return connection
 
     @classmethod
     def get_database(self):
@@ -18,19 +18,19 @@ class Connection():
         return db
 
     @classmethod
-    def get_document(self, collection, meta):
-        coll = self.get_collection()
-	doc = coll[collection]
-        document = doc.find_one(meta)
+    def get_collection(self, collection):
+        db = self.get_database()
+        coll = db[collection]
+        return coll
 
-        if document:
-            return True
-        else:
-            return False
+    @classmethod
+    def get_document(self, collection, meta):
+        coll = self.get_collection(collection)
+        doc = coll.find_one(meta)
+        return doc
 
     @classmethod
     def insert(self, collection, meta):
-        coll = self.get_collection()
-	doc = coll[connection]
-        doc.insert(meta)
+        coll = self.get_collection(collection)
+        coll.insert(meta)
 
