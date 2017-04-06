@@ -4,6 +4,10 @@
         <title>颖空间</title>
         <meta charset="utf-8">
         {% block link %}{% end %}
+
+        <script type="text/javascript" src="{{ static_url('js/jquery-3.2.0.min.js')}}" defer></script>
+
+        {% block javascript_in_head %}{% end %}
     </head>
     <body>
         {% block body %}{% end %}

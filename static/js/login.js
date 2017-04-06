@@ -338,23 +338,6 @@ function login() {
     };
 
     $(document).ready(function(){
-        store.clear()
-        detectBrowser();
-
-        var fancyboxConfig = {
-            padding: 0,
-            closeBtn: true,
-            topRatio: 0.3,
-            scrolling: "no",
-        };
-        $("#forget-password-link").fancybox(fancyboxConfig);
-        $("#resend-activation-email-link").fancybox(fancyboxConfig)
         $("#login-button").click(login);
-
-        $("#register-link").click(Controller.loadRegisterModal);
-        $("#submit-register-button").live('click', Controller.register);
-        $("#submit-validate-button").click(Controller.sendResetPasswordMail);
-        $("#submit-activation-email-modal-button").click(
-            Controller.sendActiveAccountMail);
     });
 }(jQuery));
