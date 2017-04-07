@@ -6,6 +6,7 @@ import time
 
 from tornado.ioloop import IOLoop
 import tornado.web
+import tornado.httpserver
 from tornado.options import define, options
 from urlmap import urls
 
@@ -14,7 +15,9 @@ define('port', default=8080, help="listen on given port", type=int)
 rootpath = os.path.dirname(__file__)
 
 settings = {'static_path' : os.path.join(rootpath, 'static/'),
-           'template_path': os.path.join(rootpath,'static/template/'),
+            'template_path': os.path.join(rootpath, 'static/template'),
+           'xsrf_cookies': True,
+           'cookie_secret': "cXzLGhX5SlGe+Bm+DgdiqECKjyXEeED2pzaOnUttCtM=",
            'login_url': '/login'}
 
 application = tornado.web.Application(
@@ -23,5 +26,6 @@ application = tornado.web.Application(
 )
 
 if __name__ == "__main__":
-    application.listen(options.port)
+    httpserver = tornado.httpserver.HTTPServer(application)
+    httpserver.listen(options.port)
     IOLoop.instance().start()

@@ -1,36 +1,24 @@
-function enterLogin(e) {
-    var key = window.event ? e.keyCode : e.which;
-    if (key == 13) {
-        login();
-    }
+function getCookie(name) {
+        var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+            return r ? r[1] : undefined;
 }
 
 function login() {
     var email = $.trim($('input[name="email"]').val());
-    var password = $('input[name="password"]').val();
+    var password = $.trim($('input[name="password"]').val());
 
-    if(is_null(email)){
-        Messenger().post({
-            message: "请输入登录邮箱!",
-            showCloseButton: true,
-            type: "error",
-            id: 0
-        });
+    if(email == 'undefined' || email == null || email== ""){
+        alert('请输入邮箱!');
         return;
     }
 
-    if(is_null(password)){
-        Messenger().post({
-            message: "请输入密码!",
-            showCloseButton: true,
-            type: "error",
-            id: 0
-        });
+    if(password == 'undefined' || password == null || password == ""){
+        alert('请输入密码!');
         return;
     }
 
     $.ajax({
-        url: "/login" + window.location.search,
+        url: "/login",
         type: "POST",
         dataType: "json",
         data: {
@@ -39,25 +27,8 @@ function login() {
             _xsrf: getCookie("_xsrf")
         },
         success: function(data, textStatus, jqXHR){
-            if (data.error != undefined) {
-                Messenger().post({
-                    message: data.error,
-                    showCloseButton: true,
-                    type: "error",
-                    id: 0
-                });
-            } else {
-                window.location.href = data.next;
-            }
+            window.location.href = data.next;
         },
-        error: function(jqXHR , textStatus , errorThrown){
-            Messenger().post({
-                message: "登录失败!",
-                showCloseButton: true,
-                type: "error",
-                id: 0
-            });
-        }
     });
 }
 

@@ -2,15 +2,17 @@
 # coding=utf-8
 
 import tornado.web
+import json
 from mongo.mongod import Connection
+from base.handler import BaseHandler
 
-class IndexHandler(tornado.web.RequestHandler):
+class IndexHandler(BaseHandler):
     def get(self):
         self.redirect("/login")
 
-class LoginHandler(tornado.web.RequestHandler):
+class LoginHandler(BaseHandler):
     def get(self):
-        if not self.current_user:
+        if not self.get_current_user():
             self.render("login.html")
         else:
             self.redirect("/home")
@@ -27,7 +29,12 @@ class LoginHandler(tornado.web.RequestHandler):
 
         if not user:
             self.write("error username or passwd")
+        else:
+            self.set_secure_cookie('userid', username, expires_days=None ,httponly=True)
+            self.write(json.dumps({'next': self.get_argument('next', '/')}))
+            self.flush()
 
-class LogoutHandler(tornado.web.RequestHandler):
+class LogoutHandler(BaseHandler):
     def post(self):
-        self.render("login.html")
+        self.clear_all_cookies()
+        self.redirect('/')
