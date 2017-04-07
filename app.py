@@ -9,6 +9,7 @@ import tornado.web
 import tornado.httpserver
 from tornado.options import define, options
 from urlmap import urls
+from home.handler import HomeEntry
 
 define('port', default=8080, help="listen on given port", type=int)
 
@@ -17,6 +18,7 @@ rootpath = os.path.dirname(__file__)
 settings = {'static_path' : os.path.join(rootpath, 'static/'),
             'template_path': os.path.join(rootpath, 'static/template'),
            'xsrf_cookies': True,
+           'ui_modules' :{'Entry': HomeEntry},
            'cookie_secret': "cXzLGhX5SlGe+Bm+DgdiqECKjyXEeED2pzaOnUttCtM=",
            'login_url': '/login'}
 
