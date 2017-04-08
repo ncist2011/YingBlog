@@ -9,6 +9,7 @@
 
 {% block body %}
 <div class="main">
+    {% module xsrf_form_html() %}
     <div class="main-content">
         <div class="login-item">
             <input type="text" name="email" placeholder="请输入邮箱" >

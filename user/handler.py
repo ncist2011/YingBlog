@@ -18,19 +18,19 @@ class LoginHandler(BaseHandler):
             self.redirect("/home")
 
     def post(self):
-        username = self.get_argument(username, "")
-        passwd = self.get_argument(passwd, "")
+        email = self.get_argument("email", "")
+        passwd = self.get_argument("passwd", "")
 
-        meta = {'username': username,
+        meta = {'email': email,
                 'passwd': passwd}
 
         collection = 'user'
-        user = yield Connection.get_document(dc, meta)
+        user = Connection.get_document(collection, meta)
 
         if not user:
-            self.write("error username or passwd")
+            self.write("error email or passwd")
         else:
-            self.set_secure_cookie('userid', username, expires_days=None ,httponly=True)
+            self.set_secure_cookie('userid', email, expires_days=None ,httponly=True)
             self.write(json.dumps({'next': self.get_argument('next', '/')}))
             self.flush()
 
