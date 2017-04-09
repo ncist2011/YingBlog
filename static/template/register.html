@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block link %}
+<link rel="stylesheet" href="{{ static_url('css/login.css')}}">
+{% end %}
+
+{% block javascript_in_head %}
+<script type="text/javascript" src="{{ static_url('js/login.js')}}" defer></script>
+{% end %}
+
+{% block body %}
+<div>
+    <div>
+        <div>
+            <input type="text" name="username" placeholder="请输用户名">
+        </div>
+        <div>
+            <input type="text" name="email" placeholder="请输入邮箱">
+        </div>
+        <div>
+            <input type="password" name="password1" placeholder="请输入密码">
+        </div>
+        <div>
+            <input type="password" name="password2" placeholder="请再次输入密码">
+        </div>
+        <div>
+            <a href="javascript:void(0);" id="register">提交</a>
+        </div>
+    </div>
+</div>
+{% end %}

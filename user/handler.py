@@ -38,3 +38,12 @@ class LogoutHandler(BaseHandler):
     def post(self):
         self.clear_all_cookies()
         self.redirect('/')
+
+class RegisterHandler(BaseHandler):
+    def get(self):
+        self.render("register.html")
+
+    def post(self):
+        username =self.get_argument("username", "")
+        email =self.get_argument("email", "")
+        passwd =self.get_argument("passwd", "")
