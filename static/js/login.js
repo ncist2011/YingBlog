@@ -58,7 +58,7 @@ function register(){
         return;
     }
 
-    if(passwd1 != passwd2){
+    if(password1 != password2){
         alert('两次密码输入不匹配!');
         return;
     }
@@ -70,8 +70,8 @@ function register(){
         data: {
             username: username,
             email: email,
-            passwd1: passwd1,
-            passwd2: passwd2,
+            passwd1: password1,
+            passwd2: password2,
             _xsrf: getCookie("_xsrf")
         }
     });
@@ -355,6 +355,6 @@ function register(){
 
     $(document).ready(function(){
         $("#login").click(login);
-        $("#register").click(register);
+        $("#submit").click(register);
     });
 }(jQuery));

@@ -46,4 +46,15 @@ class RegisterHandler(BaseHandler):
     def post(self):
         username =self.get_argument("username", "")
         email =self.get_argument("email", "")
-        passwd =self.get_argument("passwd", "")
+        passwd1 =self.get_argument("passwd1", "")
+        passwd2 =self.get_argument("passwd2", "")
+
+        meta = {'username': username,
+                'email': email,
+                'passwd1': passwd1,
+                'passwd2': passwd2}
+
+        collection = 'user'
+        userid = Connection.insert(collection, meta)
+
+        self.redirect('/login')
