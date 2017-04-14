@@ -5,6 +5,7 @@ import tornado.web
 import json
 from mongo.mongod import Connection
 from base.handler import BaseHandler
+from tornado.gen import coroutine
 
 class IndexHandler(BaseHandler):
     def get(self):
@@ -17,6 +18,7 @@ class LoginHandler(BaseHandler):
         else:
             self.redirect("/home")
 
+    @coroutine
     def post(self):
         email = self.get_argument("email", "")
         passwd = self.get_argument("passwd", "")
@@ -25,7 +27,7 @@ class LoginHandler(BaseHandler):
                 'passwd': passwd}
 
         collection = 'user'
-        user = Connection.get_document(collection, meta)
+        user = yield self.get_collection(collection).find_one(meta)
 
         if not user:
             self.write("error email or passwd")

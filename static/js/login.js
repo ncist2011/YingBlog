@@ -26,8 +26,8 @@ function login() {
             password: password,
             _xsrf: getCookie("_xsrf")
         },
-        success: function(data, textStatus, jqXHR){
-            window.location.href = data.next;
+        success: function(data){
+            alert(data);
         },
     });
 }

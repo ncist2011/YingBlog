@@ -11,9 +11,13 @@ from tornado.options import define, options
 from urlmap import urls
 from home.handler import HomeEntry
 
+import motor
+
 define('port', default=8080, help="listen on given port", type=int)
 
 rootpath = os.path.dirname(__file__)
+
+connection = motor.MotorClient()
 
 settings = {'static_path' : os.path.join(rootpath, 'static/'),
             'template_path': os.path.join(rootpath, 'static/template'),
@@ -24,6 +28,7 @@ settings = {'static_path' : os.path.join(rootpath, 'static/'),
 
 application = tornado.web.Application(
     handlers=urls,
+    connection=connection,
     **settings
 )
 
