@@ -35,8 +35,7 @@ function login() {
 function register(){
     var username = $.trim($('input[name="username"]').val());
     var email = $.trim($('input[name="email"]').val());
-    var password1 = $.trim($('input[name="password1"]').val());
-    var password2 = $.trim($('input[name="password2"]').val());
+    var password = $.trim($('input[name="password"]').val());
 
     if(username == 'undefined' || username == null || username== ""){
         alert('请输入用户名!');
@@ -48,18 +47,8 @@ function register(){
         return;
     }
 
-    if(password1 == 'undefined' || password1 == null || password1 == ""){
+    if(password == 'undefined' || password == null || password == ""){
         alert('请输入密码!');
-        return;
-    }
-
-    if(password2 == 'undefined' || password2 == null || password2 == ""){
-        alert('请再次输入密码!');
-        return;
-    }
-
-    if(password1 != password2){
-        alert('两次密码输入不匹配!');
         return;
     }
 
@@ -70,8 +59,7 @@ function register(){
         data: {
             username: username,
             email: email,
-            passwd1: password1,
-            passwd2: password2,
+            password: password,
             _xsrf: getCookie("_xsrf")
         }
     });

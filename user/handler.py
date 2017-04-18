@@ -21,16 +21,17 @@ class LoginHandler(BaseHandler):
     @coroutine
     def post(self):
         email = self.get_argument("email", "")
-        passwd = self.get_argument("passwd", "")
+        passwd = self.get_argument("password", "")
+        password = self.encrypt_password(passwd)
 
         meta = {'email': email,
-                'passwd': passwd}
+                'password': password}
 
         collection = 'user'
         user = yield self.get_collection(collection).find_one(meta)
 
         if not user:
-            self.write("error email or passwd")
+            self.write("error email or password")
         else:
             self.set_secure_cookie('userid', email, expires_days=None ,httponly=True)
             self.write(json.dumps({'next': self.get_argument('next', '/')}))
@@ -45,18 +46,21 @@ class RegisterHandler(BaseHandler):
     def get(self):
         self.render("register.html")
 
+    @coroutine
     def post(self):
         username =self.get_argument("username", "")
         email =self.get_argument("email", "")
-        passwd1 =self.get_argument("passwd1", "")
-        passwd2 =self.get_argument("passwd2", "")
+        passwd =self.get_argument("password", "")
+        password = self.encrypt_password(passwd)
 
         meta = {'username': username,
                 'email': email,
-                'passwd1': passwd1,
-                'passwd2': passwd2}
+                'password': password}
 
         collection = 'user'
-        userid = Connection.insert(collection, meta)
+        if(yield self.get_collection(collection).find_one({'username': username})):
+            errmessage = "用户名已经存在"
+
+        userid = yield self.put_collection(collection).insert(meta)
 
         self.redirect('/login')
